@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kalkulator Matriks Interaktif</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+   
+    <h1>Kalkulator Matriks Kelompok 5</h1>
+  </header>
+
+  <main class="matrices-wrapper" aria-label="Area input matriks">
+    <!-- Matriks A -->
+    <section class="matrix-section" aria-labelledby="title-matrixA" id="matrixA-section">
+      <h2 id="title-matrixA">Matriks A</h2>
+      <div class="input-ordo" aria-label="Input ordo matriks A">
+        <label for="orderA-rows">Baris:</label>
+        <select id="orderA-rows" aria-label="Pilih jumlah baris matriks A">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+
+        <label for="orderA-cols">Kolom:</label>
+        <select id="orderA-cols" aria-label="Pilih jumlah kolom matriks A">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+
+        <button id="create-matrixA" aria-label="Buat matriks A">Update Matriks A</button>
+      </div>
+      <div class="matrix-grid" id="matrixA-grid" role="grid" aria-label="Grid input matriks A">
+        <!-- inputs matriks A -->
+      </div>
+      <div class="modify-dimensions" aria-label="Tambah baris atau kolom matriks A">
+        <button id="add-rowA" aria-label="Tambah baris matriks A">Tambah Baris</button>
+        <button id="add-colA" aria-label="Tambah kolom matriks A">Tambah Kolom</button>
+      </div>
+    </section>
+
+    <!-- Matriks B -->
+    <section class="matrix-section" aria-labelledby="title-matrixB" id="matrixB-section">
+      <h2 id="title-matrixB">Matriks B</h2>
+      <div class="input-ordo" aria-label="Input ordo matriks B">
+        <label for="orderB-rows">Baris:</label>
+        <select id="orderB-rows" aria-label="Pilih jumlah baris matriks B">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+
+        <label for="orderB-cols">Kolom:</label>
+        <select id="orderB-cols" aria-label="Pilih jumlah kolom matriks B">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+
+        <button id="create-matrixB" aria-label="Buat matriks B">Update Matriks B</button>
+      </div>
+      <div class="matrix-grid" id="matrixB-grid" role="grid" aria-label="Grid input matriks B">
+        <!-- inputs matriks B -->
+      </div>
+      <div class="modify-dimensions" aria-label="Tambah baris atau kolom matriks B">
+        <button id="add-rowB" aria-label="Tambah baris matriks B">Tambah Baris</button>
+        <button id="add-colB" aria-label="Tambah kolom matriks B">Tambah Kolom</button>
+      </div>
+    </section>
+  </main>
+
+  <section class="panel-operations" aria-label="Panel operasi matriks">
+    <button class="op-btn" data-op="add" aria-label="Penjumlahan Matriks">➕ Penjumlahan</button>
+    <button class="op-btn" data-op="subtract" aria-label="Pengurangan Matriks">➖ Pengurangan</button>
+    <button class="op-btn" data-op="multiply" aria-label="Perkalian Matriks">✖ Perkalian</button>
+    <button class="op-btn" data-op="obe" aria-label="Operasi Baris Elementer Matriks A">ℹ️ OBE</button>
+    <button class="op-btn" data-op="oke" aria-label="Operasi Kolom Elementer Matriks A">ℹ️ OKE</button>
+    <button class="op-btn" data-op="adjoint" aria-label="Adjoin Matriks A">♻️ Adjoin</button>
+    <button class="op-btn" data-op="transpose" aria-label="Transpose Matriks A">⤴️ Transpose</button>
+    <button class="op-btn" data-op="determinant" aria-label="Determinan Matriks A 3x3 (Sarrus)">∑ Determinan</button>
+
+    <!-- Tombol SPL -->
+    <button class="op-btn special-btn" data-op="solve-inverse" aria-label="Selesaikan SPL menggunakan metode invers">
+      🧮 Selesaikan SPL (Invers)
+    </button>
+  </section>
+
+
+
+  <section class="result-panel" aria-live="polite" aria-atomic="true" aria-label="Hasil operasi matriks">
+    <h2>Hasil Operasi</h2>
+    <div id="result-matrix" class="result-matrix" aria-label="Matriks hasil">
+      <!-- Result grid populated here -->
+    </div>
+    <pre class="steps" id="steps" aria-label="Keterangan operasi">
+      <!-- Deskripsi hasil dan langkah-langkah -->
+    </pre>
+  </section>
+
+  <script src="Gerak.js"></script>
+</body>
+</html>

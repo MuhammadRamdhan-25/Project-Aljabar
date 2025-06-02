@@ -172,10 +172,88 @@
         return A;
       }
 
-      function okeRcef(matrix) {
-        // Placeholder untuk OKE jika diperlukan
-        return deepCopyMatrix(matrix); // Not implemented yet
+oke: (A) => {
+  function okeRref(matrix) {
+    let A = deepCopyMatrix(matrix);
+    const rows = A.length;
+    const cols = A[0].length;
+    let lead = 0;
+
+    for (let c = 0; c < cols; c++) {
+      if (lead >= rows) break;
+      let i = c;
+      while (A[lead][i] === 0) {
+        i++;
+        if (i === cols) {
+          i = c;
+          lead++;
+          if (lead === rows) return A;
+        }
       }
+      for (let k = 0; k < rows; k++) {
+        let temp = A[k][i];
+        A[k][i] = A[k][c];
+        A[k][c] = temp;
+      }
+      let lv = A[lead][c];
+      if (lv !== 0) {
+        for (let k = 0; k < rows; k++) A[k][c] /= lv;
+      }
+      for (let j = 0; j < cols; j++) {
+        if (j !== c) {
+          let lv2 = A[lead][j];
+          for (let k = 0; k < rows; k++) {
+            A[k][j] -= lv2 * A[k][c];
+          }
+        }
+      }
+      lead++;
+    }
+
+    return A;
+  }
+
+  return { res: okeRref(A), steps: 'Operasi Kolom Elementer selesai.' };
+}
+
+inverse: (A) => {
+  const n = A.length;
+  if (n !== A[0].length) return { res: null, steps: 'Bukan matriks bujursangkar.' };
+
+  let I = A.map((row, i) =>
+    row.map((_, j) => (i === j ? 1 : 0))
+  );
+  let AI = A.map((row, i) => row.concat(I[i]));
+  const m = AI.length;
+  const totalCols = AI[0].length;
+
+  for (let i = 0; i < m; i++) {
+    // Cari pivot
+    let maxRow = i;
+    for (let k = i + 1; k < m; k++) {
+      if (Math.abs(AI[k][i]) > Math.abs(AI[maxRow][i])) maxRow = k;
+    }
+    if (AI[maxRow][i] === 0) return { res: null, steps: 'Matriks tidak invertibel.' };
+
+    [AI[i], AI[maxRow]] = [AI[maxRow], AI[i]];
+
+    // Normalize pivot row
+    const pivot = AI[i][i];
+    for (let j = 0; j < totalCols; j++) AI[i][j] /= pivot;
+
+  
+    for (let k = 0; k < m; k++) {
+      if (k !== i) {
+        const factor = AI[k][i];
+        for (let j = 0; j < totalCols; j++) AI[k][j] -= factor * AI[i][j];
+      }
+    }
+  }
+
+  const inverseMatrix = AI.map(row => row.slice(n));
+  return { res: inverseMatrix, steps: 'Invers matriks selesai.' };
+}
+
 
       return { res: obeRref(A), steps: 'Operasi Baris Elementer selesai.' };
     }
@@ -254,7 +332,17 @@
       const { res, steps: s } = matOps.obe(A);
       result = res;
       steps = s;
-    }
+    } else if (op === 'oke') {
+      const { res, steps: s } = matOps.oke(A);
+      result = res;
+      steps = s;
+    } else if (op === 'inverse') {
+      const { res, steps: s } = matOps.inverse(A);
+      if (!res) return alert(s);
+      result = res;
+      steps = s;
+}
+
 
     displayResultMatrix(result);
     el.stepsArea.textContent = steps;
